@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Foobar
+Comment=This is a demo
+Icon=utilities-terminal
+Exec=/usr/bin/foobar
+DBusActivatable=true
+Terminal=false
+Categories=GTK;GNOME;Utility;
+StartupNotify=true
+StartupWMClass=foobar
