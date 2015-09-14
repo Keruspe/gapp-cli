@@ -2,20 +2,25 @@
 
 #include <stdlib.h>
 
+static void
+create_window (GApplication *application,
+               const gchar  *text)
+{
+    GtkWidget *window = gtk_application_window_new (GTK_APPLICATION (application));
+    GtkWindow *win = GTK_WINDOW (window);
+
+    gtk_container_add (GTK_CONTAINER (window), gtk_label_new ((text) ? text : "Hello, World"));
+    gtk_widget_show_all (window);
+}
+
 static gint
 foobar_command_line (GApplication            *application,
                      GApplicationCommandLine *command_line)
 {
-    g_autoptr (GError) error = NULL;
-
-    GtkWidget *window = gtk_application_window_new (GTK_APPLICATION (application));
-    GtkWindow *win = GTK_WINDOW (window);
-
     g_autoptr (GVariant) v = g_variant_dict_lookup_value (g_application_command_line_get_options_dict (command_line), G_OPTION_REMAINING, NULL);
-    const gchar *text = (v) ? g_variant_get_strv (v, NULL)[0] : "Hello, World";
+    const gchar *text = (v) ? g_variant_get_strv (v, NULL)[0] : NULL;
 
-    gtk_container_add (GTK_CONTAINER (window), gtk_label_new (text));
-    gtk_widget_show_all (window);
+    create_window (application, text);
 
     return EXIT_SUCCESS;
 }
@@ -40,14 +45,14 @@ foobar_activate (GApplication *application)
             break;
         }
     }
+
+    create_window (application, NULL);
 }
 
 gint
 main (gint   argc,
       gchar *argv[])
 {
-    g_autoptr (GError) error = NULL;
-
     gtk_init (&argc, &argv);
 
     GtkApplication *app = gtk_application_new ("org.gnome.Foobar", G_APPLICATION_NON_UNIQUE|G_APPLICATION_HANDLES_COMMAND_LINE);
