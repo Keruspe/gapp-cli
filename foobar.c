@@ -55,7 +55,7 @@ main (gint   argc,
 {
     gtk_init (&argc, &argv);
 
-    GtkApplication *app = gtk_application_new ("org.gnome.Foobar", G_APPLICATION_NON_UNIQUE|G_APPLICATION_HANDLES_COMMAND_LINE);
+    GtkApplication *app = gtk_application_new ("org.gnome.Foobar", G_APPLICATION_HANDLES_COMMAND_LINE);
     GApplication *gapp = G_APPLICATION (app);
     GApplicationClass *klass = G_APPLICATION_GET_CLASS (gapp);
 
